@@ -37,8 +37,7 @@ public class MenulCommitConsumer {
 				, "false");
 		properties.put(
 				"auto.offset.reset"
-				, "latest");
-		
+				, "earliest");
 		
 		consumer = new KafkaConsumer<String, String>(properties);
 	}
@@ -46,6 +45,11 @@ public class MenulCommitConsumer {
 	public void subscribeTopic(){
 		List<String> topics = new ArrayList<String>();
 		topics.add("from-java");
+//		//指定分区
+//		List<TopicPartition> topicPartitions = 
+//				new ArrayList<>();
+//		topicPartitions.add(new TopicPartition("from-java",0));
+//		consumer.assign(topicPartitions);
 		consumer.subscribe(topics);
 		//始终拉取
 		while(true){
@@ -69,7 +73,6 @@ public class MenulCommitConsumer {
 						new TopicPartition("from-java", 0));
 		System.out.println(offsets+" : "+offsets.offset());
 	}
-	
 	
 	
 	//消费这对topic的消费指定有两种方式, 1.consumer.subscribe(topic)
@@ -139,39 +142,11 @@ public class MenulCommitConsumer {
 	
 	public static void main(String[] args) {
 		MenulCommitConsumer producerConsumer = new MenulCommitConsumer();
-		producerConsumer.subscribeTopic();
 //		producerConsumer.getOffsets();
+		producerConsumer.subscribeTopic();
 //		producerConsumer.consumerAssigned();
 //		producerConsumer.setCommitOffset();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
