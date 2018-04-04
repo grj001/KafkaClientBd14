@@ -2,15 +2,12 @@ package com.zhiyou.kafkaClient.homwork_20171113;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileProducer {
 
@@ -46,7 +43,15 @@ public class FileProducer {
 		while((len = fileInputStream.read(byteContext)) != -1){
 			ProducerRecord<String, byte[]> record = 
 					new ProducerRecord<String, byte[]>(topicStr, byteContext);
-			producer.send(record);
+			producer.send(record,new Callback() {
+				
+				@Override
+				public void onCompletion(RecordMetadata metadata, Exception exception) {
+					//5秒钟消费数据
+					System.out.println("producer.send ......");
+					System.out.println(metadata.offset());
+				}
+			});
 		}
 	}
 	

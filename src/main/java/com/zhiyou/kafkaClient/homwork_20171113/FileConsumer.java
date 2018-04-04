@@ -1,7 +1,6 @@
 package com.zhiyou.kafkaClient.homwork_20171113;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,13 +27,13 @@ public class FileConsumer {
 				, "org.apazhe.kafka.common.serizlizer.StringDeserializer");
 		properties.put(
 				"value.deserializer"
-				, "prg.apache.kafka.common.serializer.StringDeserializer");
+				, "org.apache.kafka.common.serializer.StringDeserializer");
 				
 		consumer = new KafkaConsumer<String, byte[]>(properties);
 	}
 	
 	public void subscribeTopic() throws IOException{
-		FileOutputStream fileOutputStream = 
+		FileOutputStream fileOutputStream =
 				new FileOutputStream(new File(fileName));
 		while(true){
 			consumer.subscribe(Arrays.asList(topic));
